@@ -137,7 +137,7 @@ config HAVE_FAST_GUP
 	bool
 
 config ARCH_KEEP_MEMBLOCK
-	bool
+	def_bool y
 
 config MEMORY_ISOLATION
 	bool

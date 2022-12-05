@@ -358,6 +358,14 @@
 434	common	pidfd_open		__x64_sys_pidfd_open
 435	common	clone3			__x64_sys_clone3/ptregs
 
+
+
+#custom syscalls
+436	common	memblock		__x64_sys_memblock
+437	common	vm_area_struct		__x64_sys_vm_area_struct
+
+
+
 #
 # x32-specific system call numbers start at 512 to avoid cache impact
 # for native 64-bit operation. The __x32_compat_sys stubs are created
