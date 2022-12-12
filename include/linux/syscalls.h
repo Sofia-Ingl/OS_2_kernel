@@ -1427,7 +1427,7 @@ long compat_ksys_semtimedop(int semid, struct sembuf __user *tsems,
 
 
 /*custom syscalls*/
-asmlinkage long sys_memblock(void);
-asmlinkage long sys_vm_area_struct(int);
+asmlinkage long sys_vm_area_struct(int, void*, int, void*, int, int*);
+asmlinkage long sys_memblock(void*, int, void*, int);
 
 #endif
