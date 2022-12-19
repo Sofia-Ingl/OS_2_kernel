@@ -14,12 +14,17 @@
 	char* filename;
  };
  
-SYSCALL_DEFINE6(vm_area_struct, int, pid, void*, dest_arr, int, dest_arr_sz, void*, buff_arr, int, buff_arr_sz, int*, all_areas_flag)
+SYSCALL_DEFINE6(vm_area_struct, int*, pid_and_first_struct_num, void*, dest_arr, int, dest_arr_sz, void*, buff_arr, int, buff_arr_sz, int*, all_areas_flag)
 {
  struct pid* pid_val;
  struct task_struct* process;
  struct mm_struct* mm;
  struct vm_area_struct * vm_area;
+ int pfsn[2];
+
+ copy_from_user(pfsn, pid_and_first_struct_num, sizeof(int)*2);
+ int pid = pfsn[0];
+ int first_struct_num = pfsn[1];
 
  pid_val = find_get_pid(pid);
  process = get_pid_task(pid_val, PIDTYPE_PID);
@@ -41,6 +46,8 @@ SYSCALL_DEFINE6(vm_area_struct, int, pid, void*, dest_arr, int, dest_arr_sz, voi
  
  
  while (vm_area != NULL) {
+
+	if (areas_count >= first_struct_num) {
 	 
 	struct vm_area_struct_view vm_area_view;
 	if (dest_arr_sz < (dest_arr_pos + sizeof(struct vm_area_struct_view)) ) {
@@ -80,6 +87,8 @@ SYSCALL_DEFINE6(vm_area_struct, int, pid, void*, dest_arr, int, dest_arr_sz, voi
 	copy_to_user((char*)dest_arr + dest_arr_pos, &vm_area_view, sizeof(struct vm_area_struct_view));
 	dest_arr_pos = dest_arr_pos + sizeof(struct vm_area_struct_view);
 	
+
+	}
 	areas_count++;
 	 
 	 
