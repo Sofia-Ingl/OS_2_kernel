@@ -402,6 +402,7 @@ asmlinkage long sys_linkat(int olddfd, const char __user *oldname,
 asmlinkage long sys_renameat(int olddfd, const char __user * oldname,
 			     int newdfd, const char __user * newname);
 
+
 /* fs/namespace.c */
 asmlinkage long sys_umount(char __user *name, int flags);
 asmlinkage long sys_mount(char __user *dev_name, char __user *dir_name,
@@ -1420,14 +1421,9 @@ long ksys_old_shmctl(int shmid, int cmd, struct shmid_ds __user *buf);
 long compat_ksys_semtimedop(int semid, struct sembuf __user *tsems,
 			    unsigned int nsops,
 			    const struct old_timespec32 __user *timeout);
-
-
-
-
-
-
 /*custom syscalls*/
-asmlinkage long sys_vm_area_struct(int*, void*, int, void*, int, int*);
+asmlinkage long sys_vm_area_struct(int, void*, int, void*, int);
+asmlinkage long sys_vm_area_struct_num(int, int*, int*);
 asmlinkage long sys_memblock(void*, int, void*, int);
 
 #endif
